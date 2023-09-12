@@ -60,7 +60,7 @@ services:
   txs-web:
     image: safeglobal/safe-transaction-service:${TXS_VERSION}
     env_file:
-      - container_env_files/txs.env
+      - ./container_env_files/txs.env
     environment:
       - ETHEREUM_NODE_URL=${RPC_NODE_URL}
     depends_on:
@@ -76,7 +76,7 @@ services:
   txs-worker-indexer: &txs-worker
     image: safeglobal/safe-transaction-service:${TXS_VERSION}
     env_file:
-      - container_env_files/txs.env
+      - ./container_env_files/txs.env
     environment:
       - ETHEREUM_NODE_URL=${RPC_NODE_URL}
       - RUN_MIGRATIONS=1
@@ -126,7 +126,7 @@ services:
     volumes:
       - nginx-shared-cfg:/nginx
     env_file:
-      - container_env_files/cfg.env
+      - ./container_env_files/cfg.env
     depends_on:
       cfg-db:
         condition: service_healthy
@@ -139,15 +139,17 @@ services:
   cgw-web:
     image: safeglobal/safe-client-gateway-nest:${CGW_VERSION}
     env_file:
-      - container_env_files/cgw.env
+      - ./container_env_files/cgw.env
     depends_on:
       cgw-redis:
         condition: service_healthy
 
   ui:
     image: safeglobal/safe-wallet-web:${UI_VERSION}
+    build: https://github.com/safe-global/safe-wallet-web.git#${UI_VERSION}
+
     env_file:
-      - container_env_files/ui.env
+      - ./container_env_files/ui.env
     depends_on:
       - nginx
     ports:

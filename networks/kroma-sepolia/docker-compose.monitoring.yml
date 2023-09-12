@@ -1,10 +1,10 @@
-version: '3.8'
+version: "3.8"
 
 services:
   txs-flower:
     image: safeglobal/safe-transaction-service:${TXS_VERSION}
     env_file:
-      - container_env_files/txs.env
+      - ./container_env_files/txs.env
     depends_on:
       - txs-db
       - txs-redis
