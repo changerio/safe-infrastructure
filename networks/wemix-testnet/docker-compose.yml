@@ -145,8 +145,13 @@ services:
         condition: service_healthy
 
   ui:
-    image: safeglobal/safe-wallet-web:${UI_VERSION}
-    build: https://github.com/safe-global/safe-wallet-web.git#${UI_VERSION}
+    # we don't use the safeglobal's image because it doesn't support base path
+    # image: safeglobal/safe-wallet-web:${UI_VERSION}
+    # build: https://github.com/safe-global/safe-wallet-web.git#${UI_VERSION}
+
+    # forked image based on 1.18.0
+    image: changerio/safe-wallet-web:with-base-path
+    build: https://github.com/changerio/safe-wallet-web.git#with-base-path
 
     env_file:
       - ./container_env_files/ui.env
